@@ -133,7 +133,7 @@ function remover(index) {
    
       </li>
     </ul>
-    <button @click="limpaCarrinho()">limpar carrinho</button>
+    <button @click="limpaCarrinho()">Limpar carrinho</button>
   </div>
 </ul>
 </template>
