@@ -1,19 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-     /*const items = ref([
-        { id: 1, name: '', details: { description: '', price: 17.90 } },
-        { id: 2, name: '', details: { description: '', price: 9.90 } },
-        { id: 3, name: '', details: { description: '', price: 27.50 } },
-        { id: 4, name: '', details: { description: '', price: 39.90 } },
-        { id: 5, name: '', details: { description: '', price: 29.99 } },
-        { id: 6, name: '', details: { description: '', price: 7.90 } },
-        { id: 7, name: '', details: { description: 'Item 3 description', price: 30.00 } },
-        { id: 8, name: '', details: { description: 'Item 3 description', price: 30.00 } },
-        { id: 9, name: '', details: { description: 'Item 3 description', price: 30.00 } },
-        { id: 10, name: '', details: { description: 'Item 3 description', price: 30.00 } },
-
-  ])*/const item = ref([
+const item = ref([
 { 
         id: 1,
         nome: 'Caderno 10 matérias',
@@ -76,27 +64,38 @@ import { ref } from 'vue'
     }
 ])
 
-  const carrinhos = ref([
-{
-        id: 10,
-        nome: '',
-        preco: 19.55,
-        quantidade: 0,
-    }
-])
-
 function incrementar(index) {
     item.value[index].quantidade++
   }
   function descrementar(index) {
     item.value[index].quantidade--
   }
-  
-  function adicionar(index) {
-    carrinhos.value.push(item.value)
-    carrinhos.value = ''
+  let valortotal = ref(0)
+
+  let carrinho = ref([])
+function addCarrinho(item) {
+  carrinho.value.push({
+    codigo: item.id,
+    nome: item.nome,
+    preco: item.preco,
+    quantidade: item.quantidade,
+    totalItem: item.preco * item.quantidade
+  })
+  totalValor()
+  item.quantidade = 1
+}
+function totalValor(){
+  for (let contador = 0; contador < carrinho.value.length; contador++) {
+    valortotal.value = valortotal.value + carrinho.value[contador].totalItem  
   }
-  
+}
+function limpaCarrinho() {
+  carrinho.value = []
+}
+function remover(index) {
+  carrinho.value.splice(index, 1)
+}
+
 </script>
 
 <template>
@@ -109,7 +108,7 @@ function incrementar(index) {
         <p>quantidade: {{ item.quantidade }}</p>
         <button @click="incrementar(index)">+</button>
         <button @click="descrementar(index)">-</button>
-        <button @click="adicionar">Adicionar</button>
+        <button @click="addCarrinho(item)">Adicionar</button>
       </li>
     </ul>
     <hr>
@@ -120,8 +119,31 @@ function incrementar(index) {
         <p>ID: {{ item.id }}</p>
     </li>
   </div>
+
+  <ul>
+    <div class="">
+    <h1>Carrinho</h1> 
+    <ul>
+      <li v-for="(item, index) in carrinho" :key="index">{{ item.nome }} 
+      <p> valor: {{(item.preco) }} Preço</p>
+    <p>Quant: {{ item.quantidade }}</p>
+    <button id="remove" @click="remover(index)">remover item</button>  
+    <p class="letraTotal">Preço total: {{ (item.totalItem) }}</p>
+    
+   
+      </li>
+    </ul>
+    <button @click="limpaCarrinho()">limpar carrinho</button>
+  </div>
+</ul>
 </template>
 
 <style scoped>
 
+
+ul{
+  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 5fr 5fr;
+}
 </style>
