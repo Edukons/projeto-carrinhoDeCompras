@@ -99,87 +99,142 @@ function remover(index) {
 </script>
 
 <template>
-  <div class="col align-items-center">
-    <ul>
-      <li class="produtos col" v-for="(item, index) in item" :key="item.id">
-        <p>Item: {{ item.nome }}</p>
-        <p>Preco: {{ item.preco }}</p>
-        <p>quantidade: {{ item.quantidade }}</p>
-        <button class="produtos:hover aad " @click="incrementar(index)">+</button>
-        <button class="produtos:hover aad" @click="descrementar(index)">-</button>
-        <button class="produtos:hover aad" @click="addCarrinho(item)">Adicionar</button>
-      </li>
+  <div class="flexbox">
+
+    <ul class="">
+      <div class="card">
+        <div class=" card-body row align-items-start m-2 p-2 ">
+          <li class="col" v-for="(item, index) in item" :key="item.id">
+            <p class="list-group-item">{{ item.nome }}</p>
+            <p>Preco: {{ item.preco }}</p>
+            <p>quantidade: {{ item.quantidade }}</p>
+            <button class="btn btn-primary aad" @click="incrementar(index)">Aumentar</button>
+            <button class="btn btn-primary aad" @click="descrementar(index)">Remover</button>
+            <button class="btn btn-primary aad" @click="addCarrinho(item)">Adicionar</button>
+          </li>
+        </div>
+      </div>
     </ul>
     <hr>
+
+
+    
   </div>
+  <ul class="oie">
+      <div class="md-3">
+        <h1>Carrinho</h1>
+        <ul class="carrinho list-group">
+          <li class="list-group-item" v-for="(item, index) in carrinho" :key="index">{{ item.nome }}
+            <p> valor: {{ (item.preco) }} Preço</p>
+            <p>Quant: {{ item.quantidade }}</p>
+            <button class="btn btn-primary"  id="remove" @click="remover(index)">remover item</button>
+            <p class="letraTotal">Preço total: {{ (item.totalItem) }}</p>
 
-  <ul>
-    <div class="">
-      <h1>Carrinho</h1>
-      <ul>
-        <li v-for="(item, index) in carrinho" :key="index">{{ item.nome }}
-          <p> valor: {{ (item.preco) }} Preço</p>
-          <p>Quant: {{ item.quantidade }}</p>
-          <button id="remove" @click="remover(index)">remover item</button>
-          <p class="letraTotal">Preço total: {{ (item.totalItem) }}</p>
 
-
-        </li>
-      </ul>
-      <button @click="limpaCarrinho()">Limpar carrinho</button>
-    </div>
-  </ul>
+          </li>
+          <button class="btn btn-primary" @click="limpaCarrinho()">Limpar carrinho</button>
+        </ul>
+        
+      </div>
+    </ul>
 </template>
 
 <style scoped>
-  .produtos {
-    margin: 20px;
-    width: calc(33.33% - 40px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
-    border-radius: 5px;
-    transition: transform 0.2s ease-in-out;
-  }
-  .produtos:hover {
-    transform: translateY(-5px);
-  }
-  .produtos p {
-    margin: 0;
-    text-align: center;
-  }
-  .produtos p:nth-of-type(1) {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  .produtos p:nth-of-type(2) {
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-  .produtos p:nth-of-type(3) {
-    font-size: 0.8rem;
-    margin-bottom: 10px;
-  }
-  .produtos button {
-    height: 30px;
-    width: 100%;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: #fff;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    margin-top: auto;
-  }
-  .produtos button:hover {
-    background-color: #3e8e41;
-  }
-  .aad{
-    width: 200px;
-  }
+.produtos {
+  margin: 20px;
+  width: calc(33.33% - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+.oie {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.produtos:hover {
+  transform: translateY(-5px);
+}
+
+.produtos p {
+  margin: 0;
+  text-align: center;
+}
+
+.produtos p:nth-of-type(1) {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.produtos p:nth-of-type(2) {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.produtos p:nth-of-type(3) {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.produtos button {
+  height: 30px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  margin-top: auto;
+}
+
+.produtos button:hover {
+  background-color: #3e8e41;
+}
+
+.aad {
+  width: 200px;
+  margin: 5px;
+}
+
+.list-group {
+  column-gap: 10px;
+
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.teste {
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 1000px;
+}
+
+.flexbox{
+    place-items: center;
+}
+
+.col {
+  text-decoration: none;
+}
+
+.carrinho {
+  justify-content: center;
+  align-items: center;
+}
+
+.md-3 {
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
